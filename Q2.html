@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <h1 align="center">Question 2</h1>
+    <p align="center">Data is get from data.json file and display in table format.</p>
+    <table id="dataTable"></table>
+    <script>
+        $.getJSON("data.json", data => {
+            $("#dataTable").attr("border", "1").attr("cellpadding", "8").attr("align", "center");
+            let table = $("#dataTable")[0];
+            
+            // Create Table Header
+            let header = table.createTHead();
+            let row = header.insertRow(0);
+            for (let i = 0; i < data.length + 1; i++) {
+                let th = document.createElement("th");
+                let text = document.createTextNode("");
+                if (i > 0) {
+                    text.textContent = "Book " + i;
+                }
+                th.appendChild(text);
+                row.appendChild(th);
+            }
+
+            // Create Table Body
+            let body = table.createTBody();
+            Object.keys(data[0]).forEach(key => {
+                let row = body.insertRow();
+                let cell = row.insertCell();
+                let text = document.createTextNode(key);
+                cell.appendChild(text);
+                data.forEach(book => {
+                    let cell = row.insertCell();
+                    let text = document.createTextNode(book[key]);
+                    cell.appendChild(text);
+                });
+            });
+        })
+    </script>
+</body>
+
+</html>
